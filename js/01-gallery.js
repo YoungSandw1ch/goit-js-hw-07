@@ -31,42 +31,32 @@ function onGalleryListClick(event) {
   const instance = createInstance(url);
   
   instance.show();
-  closeInstanceByEsc();
 };
 
 function createInstance(url) {
   return basicLightbox.create(`
-    <div class="modal">
-      <img src="${url}" width="800" height="600">
-    </div>
-  `, {
-    onShow: (instance) => {
-      instance.element().querySelector('img').onclick = instance.close
-    }
-  });
+    <img src="${url}">
+  `
+  );
 };
 
 function getOricinalImgUrl(e) {
   return e.target.dataset.source;
 };
 
-function closeInstanceByEsc() {
+function closeInstanceByEsc(instance) {
   const isOpen = document.querySelector('.modal');
-  
   if (isOpen) {
-    window.addEventListener('keydown', onEscClick)
-  } else {
-    window.removeEventListener('keydown', onEscClick);
+    e
   }
 };
 
-function onEscClick(e, instance) {
-  const isEsc = e.code === 'Escape';
-  console.log(`before if `, e.code);
-  if (isEsc) {
-    console.log(`inside if `, e.code);
-    return
-  };
+// function onEscClick(e) {
+//   const isEsc = e.code !== 'Escape';
 
-  instance.close();
-}
+//   if (isEsc) {
+//     return
+//   };
+
+//   instance.close();
+// }
