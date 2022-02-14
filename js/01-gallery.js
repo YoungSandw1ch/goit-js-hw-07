@@ -16,6 +16,7 @@ const itemsMarkup = galleryItems.map(({ preview, original, description}) => {
 </div>
 `
 }).join('');
+let instance;
 
 galleryList.insertAdjacentHTML('afterbegin', itemsMarkup);
 galleryList.addEventListener('click', onGalleryListClick);
@@ -28,17 +29,17 @@ function onGalleryListClick(event) {
   };
 
   const url = getOricinalImgUrl(event);
-  const instance = createInstance(url);
+  instance = createModal(url);
   
   instance.show(window.addEventListener('keydown', onEscClick));
 };
 
-function createInstance(url) {
+function createModal(url) {
   return basicLightbox.create(`
     <img src="${url}">
   `,
     {
-      onClose: (instance) => {
+      onClose: () => {
         window.removeEventListener('keydown', onEscClick);
       }
     }
@@ -49,13 +50,6 @@ function getOricinalImgUrl(e) {
   return e.target.dataset.source;
 };
 
-function closeInstanceByEsc(instance) {
-  const isOpen = document.querySelector('.modal');
-  if (isOpen) {
-    e
-  }
-};
-
 function onEscClick(e) {
   const isEsc = e.code !== 'Escape';
 
@@ -63,6 +57,6 @@ function onEscClick(e) {
     return
   };
 
-  console.log(`press esc`);
+  console.log(`нажатие клавиши ${e.code} для проверки снятия слушателя клавиатуры`);
   instance.close();
 }
