@@ -30,13 +30,18 @@ function onGalleryListClick(event) {
   const url = getOricinalImgUrl(event);
   const instance = createInstance(url);
   
-  instance.show();
+  instance.show(window.addEventListener('keydown', onEscClick));
 };
 
 function createInstance(url) {
   return basicLightbox.create(`
     <img src="${url}">
-  `
+  `,
+    {
+      onClose: (instance) => {
+        window.removeEventListener('keydown', onEscClick);
+      }
+    }
   );
 };
 
@@ -51,12 +56,13 @@ function closeInstanceByEsc(instance) {
   }
 };
 
-// function onEscClick(e) {
-//   const isEsc = e.code !== 'Escape';
+function onEscClick(e) {
+  const isEsc = e.code !== 'Escape';
 
-//   if (isEsc) {
-//     return
-//   };
+  if (isEsc) {
+    return
+  };
 
-//   instance.close();
-// }
+  console.log(`press esc`);
+  instance.close();
+}
